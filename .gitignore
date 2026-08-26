@@ -1,0 +1,38 @@
+# Unity-generated folders
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]serSettings/
+
+# Unity tooling and generated IDE files
+[Mm]emoryCaptures/
+[Rr]ecordings/
+[Aa]ssets/AssetStoreTools*
+.vs/
+.vscode/
+*.csproj
+*.sln
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.opendb
+*.VC.db
+
+# Crash reports and OS files
+sysinfo.txt
+*.stacktrace
+*.unitypackage
+.DS_Store
+Thumbs.db
+
+# Keep source-controlled Unity content (including every .meta file)
+!/[Aa]ssets/**/*.meta
+!/[Pp]ackages/
+!/[Pp]rojectSettings/
