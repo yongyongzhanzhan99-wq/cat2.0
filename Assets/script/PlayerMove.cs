@@ -73,21 +73,31 @@ public class PlayerMove : MonoBehaviour
 
             rb.MovePosition(rb.position + direction * speed * Time.fixedDeltaTime);
 
-            // 角色朝移动方向平滑转身。
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-            Quaternion smoothRotation = Quaternion.Slerp(
-                rb.rotation,
-                targetRotation,
-                turnSpeed * Time.fixedDeltaTime
-            );
-            rb.MoveRotation(smoothRotation);
+            // 只在地面上转身，跳跃过程中保持当前朝向。
+            if (isGrounded)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(direction);
+                Quaternion smoothRotation = Quaternion.Slerp(
+                    rb.rotation,
+                    targetRotation,
+                    turnSpeed * Time.fixedDeltaTime
+                );
+                rb.MoveRotation(smoothRotation);
+            }
         }
 
         if (jumpRequested)
         {
             jumpRequested = false;
             isGrounded = false;
+            rb.angularVelocity = Vector3.zero;
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+
+        // 防止碰撞或斜坡让角色在空中旋转。
+        if (!isGrounded)
+        {
+            rb.angularVelocity = Vector3.zero;
         }
     }
 
