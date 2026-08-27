@@ -7327,6 +7327,71 @@ Transform:
   - {fileID: 1401572265}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &467982854
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 467982856}
+  - component: {fileID: 467982855}
+  m_Layer: 0
+  m_Name: Map1 - Fruit Collection Goal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &467982855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467982854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d91799c57994f94590c32003f8155ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fruits:
+  - {fileID: 1598576249}
+  - {fileID: 29615129}
+  - {fileID: 1085177335}
+  - {fileID: 1416339581}
+  - {fileID: 1051463473}
+  - {fileID: 1992243343}
+  - {fileID: 1316612603}
+  - {fileID: 1479372836}
+  - {fileID: 866175910}
+  - {fileID: 989462057}
+  - {fileID: 956066060}
+  - {fileID: 1374323580}
+  - {fileID: 1649199573}
+  - {fileID: 1467658154}
+  - {fileID: 1660176031}
+  - {fileID: 1431100199}
+  - {fileID: 1607828270}
+  - {fileID: 2107279791}
+  nextScenePath: 
+  transitionDelay: 0.75
+--- !u!4 &467982856
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467982854}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &468306025 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6998495300129361040, guid: f22e42c13950b41499b1c427844e8f2e, type: 3}
@@ -31316,3 +31381,4 @@ SceneRoots:
   - {fileID: 2019408959}
   - {fileID: 464031240}
   - {fileID: 550888097}
+  - {fileID: 467982856}

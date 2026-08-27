@@ -8,6 +8,8 @@ namespace CatGame
         [SerializeField] private Transform player;
         [SerializeField, Min(0f)] private float pickupRadius = 1.5f;
         [SerializeField] private Vector3 localPickupPoint;
+        public event System.Action<AutoFruitPickup> Collected;
+        public bool IsCollected { get; private set; }
 
         public void Configure(Transform target, Vector3 worldFruitCenter, float radius)
         {
@@ -18,9 +20,14 @@ namespace CatGame
 
         private void Update()
         {
-            if (player == null || !player.gameObject.activeInHierarchy) return;
+            if (IsCollected || player == null || !player.gameObject.activeInHierarchy) return;
             Vector3 offset = player.position - transform.TransformPoint(localPickupPoint);
-            if (IsWithinRadius(offset, pickupRadius)) gameObject.SetActive(false);
+            if (IsWithinRadius(offset, pickupRadius))
+            {
+                IsCollected = true;
+                gameObject.SetActive(false);
+                Collected?.Invoke(this);
+            }
         }
 
         // True three-dimensional distance; does not require a Rigidbody or trigger.
