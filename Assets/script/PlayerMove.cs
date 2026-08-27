@@ -14,12 +14,14 @@ public class PlayerMove : MonoBehaviour
 
     [Header("Jump")]
     [SerializeField] private float jumpForce = 6f;
+    [SerializeField] private int maxJumps = 2;
 
     private Rigidbody rb;
     private Vector3 inputDirection;
     private Transform viewTransform;
     private bool jumpRequested;
     private bool isGrounded;
+    private int jumpsRemaining;
 
     private void Awake()
     {
@@ -34,6 +36,8 @@ public class PlayerMove : MonoBehaviour
         // 锁住侧翻，只允许角色绕 Y 轴转向。
         rb.constraints = RigidbodyConstraints.FreezeRotationX |
                          RigidbodyConstraints.FreezeRotationZ;
+
+        jumpsRemaining = maxJumps;
     }
 
     private void Update()
@@ -43,9 +47,10 @@ public class PlayerMove : MonoBehaviour
 
         inputDirection = new Vector3(horizontal, 0f, vertical).normalized;
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && jumpsRemaining > 0)
         {
             jumpRequested = true;
+            jumpsRemaining--;
         }
     }
 
@@ -93,6 +98,7 @@ public class PlayerMove : MonoBehaviour
             if (contact.normal.y > 0.5f)
             {
                 isGrounded = true;
+                jumpsRemaining = maxJumps;
                 return;
             }
         }
