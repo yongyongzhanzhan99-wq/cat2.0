@@ -7,14 +7,26 @@ using UnityEngine.SceneManagement;
 
 public static class ValidateMap1Ground
 {
-    const string Work=@"C:\Users\14265\Documents\Codex\2026-08-27\github-github-desktop-unity-unity-hub\work\map1";
+    static string Work => Path.GetFullPath(Path.Combine(Application.dataPath, "..", "Logs", "Map1"));
     static readonly string[] Names={"rpgpp_lt_terrain_grass_01","rpgpp_lt_terrain_grass_02","rpgpp_lt_terrain_path_01a","rpgpp_lt_terrain_path_01b","rpgpp_lt_terrain_sand_01"};
     [InitializeOnLoadMethod] static void Init(){EditorApplication.delayCall+=Run;}
     [MenuItem("Tools/Map1/Verify Ground Collisions")]
     public static void Run()
     {
         if(EditorApplication.isPlayingOrWillChangePlaymode || SceneManager.GetActiveScene().path!="Assets/Scenes/Gamemap1.unity")return;
-        try { Verify(); } catch(Exception e){File.WriteAllText(Path.Combine(Work,"ground-error.txt"),e.ToString());Debug.LogException(e);}
+        try { Verify(); } catch(Exception e){Debug.LogException(e);WriteReport("ground-error.txt",e.ToString());}
+    }
+    static void WriteReport(string fileName, string contents)
+    {
+        try
+        {
+            Directory.CreateDirectory(Work);
+            File.WriteAllText(Path.Combine(Work, fileName), contents);
+        }
+        catch (Exception logError)
+        {
+            Debug.LogWarning("Map1 check report could not be saved: " + logError.Message);
+        }
     }
     static void Verify()
     {
@@ -38,7 +50,7 @@ public static class ValidateMap1Ground
             if(!hitAny)throw new Exception("No walkable upper surface detected: "+mesh.name);
             hits++;
         }
-        File.WriteAllText(Path.Combine(Work,"ground-verified.txt"),"Verified "+meshes.Length+" static ground colliders and "+hits+" upper-surface ray tests. Edit-mode checks only; player/drop simulation not performed. Time="+DateTime.Now);
+        WriteReport("ground-verified.txt","Verified "+meshes.Length+" static ground colliders and "+hits+" upper-surface ray tests. Edit-mode checks only; player/drop simulation not performed. Time="+DateTime.Now);
         Debug.Log("MAP1_GROUND_VERIFIED");
     }
 }
