@@ -6,22 +6,31 @@ namespace CatGame
     public sealed class AutoFruitPickup : MonoBehaviour
     {
         [SerializeField] private Transform player;
-        [SerializeField, Min(0f)] private float pickupRadius = 1.5f;
+        [SerializeField, Min(0f)] private float pickupRadius = .75f;
         [SerializeField] private Vector3 localPickupPoint;
+        private Collider playerBody;
         public event System.Action<AutoFruitPickup> Collected;
         public bool IsCollected { get; private set; }
 
         public void Configure(Transform target, Vector3 worldFruitCenter, float radius)
         {
             player = target;
+            playerBody = player != null ? player.GetComponent<BoxCollider>() : null;
             localPickupPoint = transform.InverseTransformPoint(worldFruitCenter);
             pickupRadius = Mathf.Max(0f, radius);
+        }
+
+        private void Awake()
+        {
+            playerBody = player != null ? player.GetComponent<BoxCollider>() : null;
         }
 
         private void Update()
         {
             if (IsCollected || player == null || !player.gameObject.activeInHierarchy) return;
-            Vector3 offset = player.position - transform.TransformPoint(localPickupPoint);
+            // Measure from the body center, not the feet: a 2m-high fruit must be reachable during a jump.
+            Vector3 playerCenter = playerBody != null ? playerBody.bounds.center : player.position;
+            Vector3 offset = playerCenter - transform.TransformPoint(localPickupPoint);
             if (IsWithinRadius(offset, pickupRadius))
             {
                 IsCollected = true;
