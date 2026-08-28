@@ -20,6 +20,7 @@ public class PT_PlayerMovement : MonoBehaviour
 
     Vector3 velocity;
     bool isGrounded;
+    bool runMode;
 
     void Update()
     {
@@ -33,7 +34,7 @@ public class PT_PlayerMovement : MonoBehaviour
         // ── Input ────────────────────────────────────────────────────────────
         float x        = 0f;
         float z        = 0f;
-        bool  sprint   = false;
+        bool  sprint;
         bool  jumpDown = false;
 
 #if ENABLE_INPUT_SYSTEM
@@ -46,18 +47,19 @@ public class PT_PlayerMovement : MonoBehaviour
             if (kb.aKey.isPressed) x  = -1f;
             if (kb.dKey.isPressed) x  =  1f;
 
-            sprint   = kb.leftShiftKey.isPressed;
+            if (kb.leftShiftKey.wasPressedThisFrame) runMode = !runMode;
             jumpDown = kb.spaceKey.wasPressedThisFrame;
         }
 #elif ENABLE_LEGACY_INPUT_MANAGER
         // Legacy Input Manager (Unity 2022 and earlier)
         x        = Input.GetAxis("Horizontal");
         z        = Input.GetAxis("Vertical");
-        sprint   = Input.GetKey(KeyCode.LeftShift);
+        if (Input.GetKeyDown(KeyCode.LeftShift)) runMode = !runMode;
         jumpDown = Input.GetButtonDown("Jump");
 #endif
         // ─────────────────────────────────────────────────────────────────────
 
+        sprint = runMode;
         speed = (sprint && isGrounded) ? 10f : 5f;
 
         Vector3 move = transform.right * x + transform.forward * z;

@@ -59,7 +59,8 @@ namespace Controller
                 Input.GetAxis(m_VerticalAxis)
             );
 
-            m_IsRun = Input.GetKey(m_RunKey);
+            // A tap toggles the run state in CreatureMover; holding the key no longer matters.
+            m_IsRun = Input.GetKeyDown(m_RunKey);
 
             // GetButtonDown 让跳跃只触发一次，而不是一直触发
             m_IsJump = Input.GetButtonDown(m_JumpButton);

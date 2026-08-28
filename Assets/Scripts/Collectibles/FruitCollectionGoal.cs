@@ -17,6 +17,7 @@ namespace CatGame
         private bool complete;
         private bool valid;
         private string message;
+        private Texture2D map1FruitTexture;
 
         public void Configure(AutoFruitPickup[] items) { fruits = items; }
 
@@ -32,7 +33,38 @@ namespace CatGame
                 if (fruit.IsCollected) collected.Add(fruit);
             }
             if (!valid) Debug.LogError("Fruit goal has missing/invalid fruit references; automatic transition disabled.", this);
+            ApplyMap1FruitAppearance();
             TryComplete();
+        }
+
+        // Only Map1's configured pickup targets receive this visual override.
+        // A property block keeps their source materials and every other scene unchanged.
+        private void ApplyMap1FruitAppearance()
+        {
+            if (gameObject.scene.path != "Assets/Scenes/Gamemap1.unity")
+                return;
+
+            map1FruitTexture = Resources.Load<Texture2D>("Map1FruitTexture");
+            if (map1FruitTexture == null)
+            {
+                Debug.LogError("Map1FruitTexture is missing from Assets/Resources.", this);
+                return;
+            }
+
+            foreach (var fruit in targets)
+            {
+                if (fruit == null)
+                    continue;
+
+                foreach (var renderer in fruit.GetComponentsInChildren<Renderer>(true))
+                {
+                    var properties = new MaterialPropertyBlock();
+                    renderer.GetPropertyBlock(properties);
+                    properties.SetTexture("_MainTex", map1FruitTexture);
+                    properties.SetTexture("_BaseMap", map1FruitTexture);
+                    renderer.SetPropertyBlock(properties);
+                }
+            }
         }
 
         private void OnDisable()
@@ -52,21 +84,40 @@ namespace CatGame
         {
             if (!valid || complete || targets.Count == 0 || collected.Count != targets.Count) return;
             complete = true;
-            int index = string.IsNullOrWhiteSpace(nextScenePath) ? -1 : SceneUtility.GetBuildIndexByScenePath(nextScenePath);
-            if (index < 0 || nextScenePath == gameObject.scene.path || !Application.CanStreamedLevelBeLoaded(index))
+            if (string.IsNullOrWhiteSpace(nextScenePath) || nextScenePath == gameObject.scene.path)
             {
                 message = "All fruits collected! Next scene is not configured.";
                 Debug.LogWarning("Fruit goal complete, but select a different next scene and enable it in Build Settings. Staying in this scene.", this);
                 return;
             }
             message = "All fruits collected! Loading next scene...";
-            StartCoroutine(LoadNext(index));
+            StartCoroutine(LoadNext(nextScenePath));
         }
 
-        private IEnumerator LoadNext(int index)
+        private IEnumerator LoadNext(string scenePath)
         {
             yield return new WaitForSecondsRealtime(transitionDelay);
-            var operation = SceneManager.LoadSceneAsync(index, LoadSceneMode.Single);
+            AsyncOperation operation;
+            try
+            {
+                // This project has two scenes named "map2".  Resolve the exact
+                // configured asset path so Unity cannot choose the legacy map.
+                int buildIndex = SceneUtility.GetBuildIndexByScenePath(scenePath);
+                if (buildIndex < 0)
+                {
+                    message = "Could not load next scene.";
+                    Debug.LogError("The next scene is not in Build Settings: " + scenePath, this);
+                    yield break;
+                }
+
+                operation = SceneManager.LoadSceneAsync(buildIndex, LoadSceneMode.Single);
+            }
+            catch (System.Exception exception)
+            {
+                message = "Could not load next scene.";
+                Debug.LogException(exception, this);
+                yield break;
+            }
             if (operation == null) { message = "Could not load next scene."; yield break; }
             yield return operation;
         }
