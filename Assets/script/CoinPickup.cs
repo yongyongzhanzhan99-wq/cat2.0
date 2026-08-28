@@ -16,8 +16,8 @@ public class CoinPickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // 通过 PlayerMove 找到 character 根物体，兼容 Cube 子物体上的碰撞体。
-        PlayerMove player = other.GetComponentInParent<PlayerMove>();
+        // 通过 CharacterController 找到猫角色，兼容模型子物体上的碰撞体。
+        CharacterController player = other.GetComponentInParent<CharacterController>();
 
         if (player == null)
         {

@@ -11,7 +11,8 @@ public class VictoryPortal : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        PlayerMove player = other.GetComponentInParent<PlayerMove>();
+        CharacterController player =
+            other.GetComponentInParent<CharacterController>();
 
         if (player != null)
         {

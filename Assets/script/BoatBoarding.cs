@@ -1,22 +1,28 @@
 using UnityEngine;
 
+/// <summary>
+/// 使用 CreatureMover 角色系统的上船/下船脚本。
+/// 挂在船的 BoardZone 物体上。
+/// </summary>
 public class BoatBoarding : MonoBehaviour
 {
     public Transform seatPoint;
     public Transform exitPoint;
     public BoatController boatController;
 
-    private PlayerMove playerMove;
-    private Rigidbody playerRigidbody;
+    private CharacterController characterController;
+    private Controller.CreatureMover creatureMover;
+    private Controller.MovePlayerInput movePlayerInput;
+    private Transform playerTransform;
     private bool playerInside;
     private bool riding;
 
-    void Update()
+    private void Update()
     {
         if (!Input.GetKeyDown(KeyCode.E))
             return;
 
-        if (!riding && playerInside && playerMove != null)
+        if (!riding && playerInside && characterController != null)
         {
             GetOnBoat();
         }
@@ -28,19 +34,25 @@ public class BoatBoarding : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        PlayerMove move = other.GetComponentInParent<PlayerMove>();
+        CharacterController controller =
+            other.GetComponentInParent<CharacterController>();
 
-        if (move != null)
-        {
-            playerMove = move;
-            playerRigidbody = move.GetComponent<Rigidbody>();
-            playerInside = true;
-        }
+        if (controller == null)
+            return;
+
+        characterController = controller;
+        playerTransform = controller.transform;
+        creatureMover = controller.GetComponent<Controller.CreatureMover>();
+        movePlayerInput = controller.GetComponent<Controller.MovePlayerInput>();
+        playerInside = true;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (!riding && other.GetComponentInParent<PlayerMove>() != null)
+        CharacterController controller =
+            other.GetComponentInParent<CharacterController>();
+
+        if (!riding && controller == characterController)
         {
             playerInside = false;
         }
@@ -48,39 +60,48 @@ public class BoatBoarding : MonoBehaviour
 
     private void GetOnBoat()
     {
+        if (seatPoint == null || boatController == null)
+            return;
+
         riding = true;
         playerInside = false;
 
-        playerMove.enabled = false;
+        if (movePlayerInput != null)
+            movePlayerInput.enabled = false;
 
-        if (playerRigidbody != null)
-        {
-            playerRigidbody.velocity = Vector3.zero;
-            playerRigidbody.isKinematic = true;
-        }
+        if (creatureMover != null)
+            creatureMover.enabled = false;
 
-        playerMove.transform.SetParent(seatPoint);
-        playerMove.transform.localPosition = Vector3.zero;
-        playerMove.transform.localRotation = Quaternion.identity;
+        characterController.enabled = false;
+        playerTransform.SetParent(seatPoint, false);
+        playerTransform.localPosition = Vector3.zero;
+        playerTransform.localRotation = Quaternion.identity;
 
         boatController.isDriving = true;
     }
 
     private void GetOffBoat()
     {
-        riding = false;
+        if (exitPoint == null || boatController == null)
+            return;
 
+        riding = false;
         boatController.isDriving = false;
 
-        playerMove.transform.SetParent(null);
-        playerMove.transform.position = exitPoint.position;
+        playerTransform.SetParent(null, true);
+        playerTransform.position = exitPoint.position;
 
-        if (playerRigidbody != null)
-        {
-            playerRigidbody.isKinematic = false;
-        }
+        characterController.enabled = true;
 
-        playerMove.enabled = true;
-        playerMove = null;
+        if (creatureMover != null)
+            creatureMover.enabled = true;
+
+        if (movePlayerInput != null)
+            movePlayerInput.enabled = true;
+
+        characterController = null;
+        creatureMover = null;
+        movePlayerInput = null;
+        playerTransform = null;
     }
 }

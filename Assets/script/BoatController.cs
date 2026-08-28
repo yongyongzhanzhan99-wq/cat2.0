@@ -1,12 +1,16 @@
 using UnityEngine;
 
+/// <summary>
+/// 用 WASD 控制船前进、后退和转向。
+/// 挂在船的根物体上。
+/// </summary>
 public class BoatController : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float turnSpeed = 60f;
-    public bool isDriving = false;
+    public bool isDriving;
 
-    void Update()
+    private void Update()
     {
         if (!isDriving)
             return;
@@ -14,11 +18,9 @@ public class BoatController : MonoBehaviour
         float forward = Input.GetAxisRaw("Vertical");
         float turn = Input.GetAxisRaw("Horizontal");
 
-        // 前后移动
-        Vector3 movement = transform.forward * forward * moveSpeed * Time.deltaTime;
-        transform.position += movement;
+        transform.position +=
+            transform.forward * forward * moveSpeed * Time.deltaTime;
 
-        // 左右转向
         transform.Rotate(
             0f,
             turn * turnSpeed * Time.deltaTime,

@@ -8,43 +8,51 @@ public class PlatformRideZone : MonoBehaviour
 {
     public Transform platform;
 
-    private PlayerMove playerMove;
-    private Rigidbody playerRigidbody;
+    private CharacterController characterController;
+    private Controller.CreatureMover creatureMover;
+    private Controller.MovePlayerInput movePlayerInput;
 
     private void OnTriggerEnter(Collider other)
     {
-        PlayerMove move = other.GetComponentInParent<PlayerMove>();
+        CharacterController controller =
+            other.GetComponentInParent<CharacterController>();
 
-        if (move == null)
+        if (controller == null)
             return;
 
-        playerMove = move;
-        playerRigidbody = move.GetComponent<Rigidbody>();
+        characterController = controller;
+        creatureMover = controller.GetComponent<Controller.CreatureMover>();
+        movePlayerInput = controller.GetComponent<Controller.MovePlayerInput>();
 
-        if (playerRigidbody != null)
-        {
-            playerRigidbody.velocity = Vector3.zero;
-            playerRigidbody.isKinematic = true;
-        }
+        if (creatureMover != null)
+            creatureMover.enabled = false;
 
-        playerMove.transform.SetParent(platform, true);
+        if (movePlayerInput != null)
+            movePlayerInput.enabled = false;
+
+        characterController.enabled = false;
+        characterController.transform.SetParent(platform, true);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        PlayerMove move = other.GetComponentInParent<PlayerMove>();
+        CharacterController controller =
+            other.GetComponentInParent<CharacterController>();
 
-        if (move == null || move != playerMove)
+        if (controller == null || controller != characterController)
             return;
 
-        playerMove.transform.SetParent(null, true);
+        characterController.transform.SetParent(null, true);
+        characterController.enabled = true;
 
-        if (playerRigidbody != null)
-        {
-            playerRigidbody.isKinematic = false;
-        }
+        if (creatureMover != null)
+            creatureMover.enabled = true;
 
-        playerMove = null;
-        playerRigidbody = null;
+        if (movePlayerInput != null)
+            movePlayerInput.enabled = true;
+
+        characterController = null;
+        creatureMover = null;
+        movePlayerInput = null;
     }
 }
