@@ -462,7 +462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 464031240}
-  pickupRadius: 0.75
+  pickupRadius: 1.5
   localPickupPoint: {x: 0.0003217767, y: 0.10356892, z: -0.00000013380127}
 --- !u!23 &29615130
 MeshRenderer:
@@ -13818,7 +13818,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 464031240}
-  pickupRadius: 0.75
+  pickupRadius: 1.5
   localPickupPoint: {x: 0.0000038435605, y: 0.006126835, z: 0.000037240967}
 --- !u!1 &867313192
 GameObject:
@@ -15508,7 +15508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 464031240}
-  pickupRadius: 0.75
+  pickupRadius: 1.5
   localPickupPoint: {x: -0.0025080987, y: 0.04908387, z: -0.0006437228}
 --- !u!1 &956939991
 GameObject:
@@ -16117,7 +16117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 464031240}
-  pickupRadius: 0.75
+  pickupRadius: 1.5
   localPickupPoint: {x: 0.0003210944, y: 0.10356851, z: 0.00000010182447}
 --- !u!1 &995317049 stripped
 GameObject:
@@ -16785,7 +16785,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 464031240}
-  pickupRadius: 0.75
+  pickupRadius: 1.5
   localPickupPoint: {x: 0.00032177306, y: 0.10356892, z: -0.00000012171446}
 --- !u!23 &1051463474
 MeshRenderer:
@@ -17134,7 +17134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 464031240}
-  pickupRadius: 0.75
+  pickupRadius: 1.5
   localPickupPoint: {x: -0.0025081262, y: 0.049083818, z: -0.00064346817}
 --- !u!23 &1085177336
 MeshRenderer:
@@ -20897,7 +20897,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 464031240}
-  pickupRadius: 0.75
+  pickupRadius: 1.5
   localPickupPoint: {x: 0.0003217778, y: 0.10356892, z: -0.00000013067374}
 --- !u!1 &1318067137 stripped
 GameObject:
@@ -21631,7 +21631,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 464031240}
-  pickupRadius: 0.75
+  pickupRadius: 1.5
   localPickupPoint: {x: 0.0000029583664, y: 0.006126835, z: 0.000036341735}
 --- !u!1 &1376087945 stripped
 GameObject:
@@ -22541,7 +22541,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 464031240}
-  pickupRadius: 0.75
+  pickupRadius: 1.5
   localPickupPoint: {x: 0.0000024772755, y: 0.006126835, z: 0.000036806843}
 --- !u!23 &1416339582
 MeshRenderer:
@@ -22967,7 +22967,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 464031240}
-  pickupRadius: 0.75
+  pickupRadius: 1.5
   localPickupPoint: {x: 0.00032180964, y: 0.10356851, z: -0.0000003576254}
 --- !u!1001 &1432348629
 PrefabInstance:
@@ -23720,7 +23720,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 464031240}
-  pickupRadius: 0.75
+  pickupRadius: 1.5
   localPickupPoint: {x: -0.0025073432, y: 0.04908377, z: -0.0006436831}
 --- !u!1001 &1472461319
 PrefabInstance:
@@ -23932,7 +23932,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 464031240}
-  pickupRadius: 0.75
+  pickupRadius: 1.5
   localPickupPoint: {x: -0.0025081162, y: 0.049083818, z: -0.0006434734}
 --- !u!1 &1487683927 stripped
 GameObject:
@@ -26000,7 +26000,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 464031240}
-  pickupRadius: 0.75
+  pickupRadius: 1.5
   localPickupPoint: {x: 0.000002457627, y: 0.006126835, z: 0.000036788122}
 --- !u!23 &1598576250
 MeshRenderer:
@@ -26232,7 +26232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 464031240}
-  pickupRadius: 0.75
+  pickupRadius: 1.5
   localPickupPoint: {x: -0.0025080913, y: 0.049083862, z: -0.0006439498}
 --- !u!1 &1611979199 stripped
 GameObject:
@@ -26839,7 +26839,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 464031240}
-  pickupRadius: 0.75
+  pickupRadius: 1.5
   localPickupPoint: {x: 0.0003212325, y: 0.10356846, z: -0.0000012925608}
 --- !u!1001 &1651384019
 PrefabInstance:
@@ -27088,7 +27088,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 464031240}
-  pickupRadius: 0.75
+  pickupRadius: 1.5
   localPickupPoint: {x: 0.0000022798035, y: 0.006126835, z: 0.000037549973}
 --- !u!1001 &1675521528
 PrefabInstance:
@@ -33357,7 +33357,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 464031240}
-  pickupRadius: 0.75
+  pickupRadius: 1.5
   localPickupPoint: {x: 0.0000024526962, y: 0.006126835, z: 0.000036790443}
 --- !u!1 &2002070959 stripped
 GameObject:
@@ -35400,7 +35400,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 464031240}
-  pickupRadius: 0.75
+  pickupRadius: 1.5
   localPickupPoint: {x: 0.0000044007375, y: 0.006126835, z: 0.0000365263}
 --- !u!1001 &2115941708
 PrefabInstance:
